@@ -1,3 +1,4 @@
+import exceptions
 
 
 irreducible_poly = [1]
@@ -17,8 +18,16 @@ def degree(poly):
 
 
 def reminder(poly_a, poly_b):
+    if degree(poly_b) == -1:
+        raise exceptions.ZeroDivisionError
+    poly_a = list(poly_a)
+    
     while degree(poly_a) >= degree(poly_b):
-        sub(poly_a, poly_b)
+        poly_b = poly_b[::-1]
+        poly_a = poly_a[::-1]
+        poly_a = sub(poly_a, poly_b)
+        poly_a = poly_a[::-1]
+        poly_b = poly_b[::-1]
         trim(poly_a)
     return poly_a
 
@@ -27,7 +36,7 @@ def mul(poly_a, poly_b):
     ret = [0] * (len(poly_a) + len(poly_b))
     for i, x in enumerate(poly_a):
         for j, y in enumerate(poly_b):
-            ret[i + j] ^= x * y
+            ret[i + j] ^= x & y
     return trim(ret)
 
 
