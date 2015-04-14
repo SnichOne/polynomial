@@ -23,11 +23,7 @@ def reminder(poly_a, poly_b):
     poly_a = list(poly_a)
     
     while degree(poly_a) >= degree(poly_b):
-        poly_b = poly_b[::-1]
-        poly_a = poly_a[::-1]
-        poly_a = sub(poly_a, poly_b)
-        poly_a = poly_a[::-1]
-        poly_b = poly_b[::-1]
+        poly_a = sub(poly_a[::-1], poly_b[::-1])[::-1]
         trim(poly_a)
     return poly_a
 
